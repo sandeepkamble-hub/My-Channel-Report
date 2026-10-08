@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Sandeep Kamble · Channel Report</title>
+<style>
+  :root{
+    --bg:#f6f1e7;
+    --surface:#fffdf8;
+    --surface-2:#efe8d8;
+    --line:#ddd3bd;
+    --text:#2a2118;
+    --muted:#6b5f4f;
+    --accent:#b4531f;
+    --accent-soft:#f1d9c6;
+    --good:#2f6b4f;
+    --warn:#a33a2a;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17130e;
+      --surface:#201a13;
+      --surface-2:#2b2319;
+      --line:#3a3023;
+      --text:#f2e9d8;
+      --muted:#b3a58f;
+      --accent:#e58a4f;
+      --accent-soft:#3b2616;
+      --good:#74c19a;
+      --warn:#e57a69;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17130e;--surface:#201a13;--surface-2:#2b2319;--line:#3a3023;
+    --text:#f2e9d8;--muted:#b3a58f;--accent:#e58a4f;--accent-soft:#3b2616;
+    --good:#74c19a;--warn:#e57a69;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);line-height:1.55;
+    padding:40px 16px 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0}
+  .kicker{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin:0 0 10px;
+  }
+
+  header.top{
+    display:flex;gap:18px;align-items:center;
+    padding-bottom:26px;border-bottom:2px solid var(--text);margin-bottom:28px;
+  }
+  header.top img{
+    width:72px;height:72px;border-radius:50%;object-fit:cover;
+    border:2px solid var(--accent);flex:none;background:var(--surface-2);
+  }
+  header.top h1{font-size:clamp(26px,5vw,38px);line-height:1.1}
+  header.top .sub{color:var(--muted);font-size:14px;margin-top:6px}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px;
+  }
+  .stat{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:8px;padding:16px 16px 14px;
+  }
+  .stat .n{font-family:var(--serif);font-size:30px;line-height:1;display:block}
+  .stat .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:8px;display:block}
+  .stat .d{font-size:13px;margin-top:6px;display:block;color:var(--muted)}
+  .stat .d.flat{color:var(--warn)}
+  .stat .d.up{color:var(--good)}
+  .lede{color:var(--muted);font-size:14px;margin:6px 0 40px}
+
+  section{margin-bottom:44px}
+  section h2{font-size:22px;margin-bottom:4px}
+  section .hint{color:var(--muted);font-size:14px;margin:0 0 16px}
+
+  .panel{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:8px;padding:16px;
+  }
+  svg{display:block;width:100%;height:auto}
+  svg text{font-family:var(--sans);fill:var(--muted);font-size:11px}
+
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th{
+    text-align:left;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;padding:0 8px 10px;border-bottom:1px solid var(--line);
+  }
+  td{padding:12px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr.best td{background:var(--accent-soft)}
+  .badge{
+    display:inline-block;font-size:11px;font-weight:600;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:1px 8px;margin-left:6px;white-space:nowrap;
+  }
+  .vtitle{overflow-wrap:anywhere}
+
+  .bar-row{margin:0 0 12px}
+  .bar-row .row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px;gap:12px}
+  .bar-row .row span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .track{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+  .fill{height:100%;background:var(--accent);border-radius:5px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .mini h3{font-size:15px;margin-bottom:12px;font-family:var(--sans);font-weight:600;color:var(--muted)}
+
+  .note{
+    background:var(--surface-2);border-left:3px solid var(--accent);
+    padding:14px 16px;border-radius:0 8px 8px 0;font-size:14.5px;color:var(--text);
+  }
+
+  .bottom{background:var(--text);color:var(--bg);border-radius:10px;padding:26px 24px}
+  .bottom .kicker{color:var(--accent-soft)}
+  .bottom p{margin:0 0 14px;font-size:15.5px}
+  .bottom ol{margin:0;padding-left:20px}
+  .bottom li{margin-bottom:10px;font-size:15px}
+  .bottom strong{font-weight:700}
+
+  footer{
+    margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+
+  @media (max-width:560px){
+    .stats{grid-template-columns:1fr}
+    .two{grid-template-columns:1fr}
+    header.top{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Channel report · 10 Sep – 8 Oct 2026</p>
+  <header class="top">
+    <img id="avatar" alt="" referrerpolicy="no-referrer" src="https://yt3.ggpht.com/HrA7ZWqmPP3oml1wESSrrFQuhcpqe1bUj81pfeA1l285wQJic1hfBqCEqK-_3CNccTKWX4jq7Q=s240-c-k-c0x00ffffff-no-rj">
+    <div>
+      <h1>Sandeep Kamble</h1>
+      <div class="sub">Short films &amp; music · India · on YouTube since 2012</div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><span class="n">433</span><span class="l">Subscribers</span><span class="d flat">+0 in 30 days</span></div>
+    <div class="stat"><span class="n">25,626</span><span class="l">Total views</span><span class="d up">+49 in 30 days</span></div>
+    <div class="stat"><span class="n">22</span><span class="l">Videos</span><span class="d flat">0 new in 30 days</span></div>
+  </div>
+  <p class="lede">The channel is ticking along on old uploads. No new videos and no new subscribers this month.</p>
+
+  <section>
+    <h2>Views over time</h2>
+    <p class="hint">Cumulative total views, 8 Sep – 7 Oct</p>
+    <div class="panel"><svg id="trend" viewBox="0 0 720 200" role="img" aria-label="Line chart of cumulative total views, rising from 25,577 to 25,626"></svg></div>
+  </section>
+
+  <section>
+    <h2>Top videos</h2>
+    <p class="hint">Ranked by views in the period. The shaded row held viewers the longest.</p>
+    <div class="panel">
+      <table>
+        <thead><tr><th>Video</th><th class="num">Views</th><th class="num">Avg watch</th></tr></thead>
+        <tbody id="videos"></tbody>
+      </table>
+    </div>
+    <p class="hint" style="margin-top:10px">Four more videos each had 1 view and are not listed.</p>
+  </section>
+
+  <section>
+    <h2>Where views come from</h2>
+    <p class="hint">44 views in total. Search is doing almost all the work.</p>
+    <div class="panel" id="traffic"></div>
+  </section>
+
+  <section>
+    <h2>Long-form vs Shorts</h2>
+    <p class="hint">Long-form gets more views and far more attention per view.</p>
+    <div class="two">
+      <div class="panel mini"><h3>Views</h3><svg id="viewsChart" viewBox="0 0 300 180" role="img" aria-label="Bar chart: long-form 30 views, Shorts 14 views"></svg></div>
+      <div class="panel mini"><h3>Average view duration (seconds)</h3><svg id="durChart" viewBox="0 0 300 180" role="img" aria-label="Bar chart: long-form 114 seconds, Shorts 14 seconds"></svg></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Audience</h2>
+    <div class="note">Country and age/gender breakdowns are blank for this period. YouTube hides them when there are too few views to report without identifying viewers, so this is expected for a channel of this size.</div>
+  </section>
+
+  <section>
+    <div class="bottom">
+      <p class="kicker">Bottom line</p>
+      <p>People find this channel through search and stay for the longer short films. Vyatha and Sorry Beta hold viewers for two to five minutes, while Shorts barely get past 14 seconds. With nothing new uploaded, there has been no reason for anyone to subscribe.</p>
+      <ol>
+        <li><strong>Publish a new long-form film.</strong> No uploads this month is the biggest reason growth has stalled.</li>
+        <li><strong>Lean on what holds attention.</strong> Add end screens and a pinned comment on Vyatha and Sorry Beta pointing to your other films and the subscribe button.</li>
+        <li><strong>Sharpen search titles and thumbnails</strong> on the older films, since search brings 77% of views but viewers watch only about 11% of a video on average.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Data: vidIQ channel analytics · period 10 Sep – 8 Oct 2026</span>
+    <span>Generated 8 Oct 2026</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, parent){
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function txt(parent, x, y, s, anchor){
+    var t = el('text', {x:x, y:y, 'text-anchor': anchor || 'start'}, parent);
+    t.textContent = s;
+    return t;
+  }
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function fmtDur(s){
+    var m = Math.floor(s/60), r = s % 60;
+    return m ? m + 'm ' + r + 's' : r + 's';
+  }
+
+  var avatar = document.getElementById('avatar');
+  avatar.addEventListener('error', function(){ avatar.style.display = 'none'; });
+
+  /* Views trend */
+  var views = [25577,25577,25582,25583,25587,25589,25590,25591,25593,25598,25599,25599,25599,25599,25601,25603,25605,25606,25608,25608,25608,25609,25614,25615,25615,25618,25620,25622,25623,25626];
+  var svg = document.getElementById('trend');
+  var W=720,H=200,L=52,R=14,T=14,B=28;
+  var lo=25570, hi=25630;
+  function X(i){ return L + i*(W-L-R)/(views.length-1); }
+  function Y(v){ return T + (hi-v)*(H-T-B)/(hi-lo); }
+  [25580,25600,25620].forEach(function(g){
+    el('line',{x1:L,x2:W-R,y1:Y(g),y2:Y(g),stroke:css('--line'),'stroke-width':1}, svg);
+    txt(svg, L-8, Y(g)+4, g.toLocaleString('en-US'), 'end');
+  });
+  var d = views.map(function(v,i){ return (i?'L':'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' ');
+  el('path',{d:d,fill:'none',stroke:css('--accent'),'stroke-width':2.5,'stroke-linejoin':'round','stroke-linecap':'round'}, svg);
+  el('circle',{cx:X(views.length-1),cy:Y(views[views.length-1]),r:4,fill:css('--accent')}, svg);
+  txt(svg, L, H-8, '8 Sep', 'start');
+  txt(svg, W-R, H-8, '7 Oct', 'end');
+
+  /* Top videos (rendered with textContent so titles can never inject markup) */
+  var vids = [
+    {t:'Sorry Beta | Award Winning Short Film | Sensational Short Film', v:13, d:123},
+    {t:'Ajib dasta hai ye | Piano Intro | Sandeep Kamble', v:9, d:6},
+    {t:'Jui | How to fight against trafficking | Film Craft | Best Marathi Short Film', v:6, d:15},
+    {t:'A unforgettable tweast in Love Story | Premat Kadhi Kadhi', v:5, d:12},
+    {t:'Vyatha | Film Craft | Award Winner Best Short Film | Heart touching short film', v:5, d:298, best:true},
+    {t:'अखेर वसंत फुलंला पण...', v:2, d:4}
+  ];
+  var tb = document.getElementById('videos');
+  vids.forEach(function(x){
+    var tr = document.createElement('tr');
+    if (x.best) tr.className = 'best';
+    var a = document.createElement('td'); a.className = 'vtitle';
+    a.appendChild(document.createTextNode(x.t));
+    if (x.best){
+      var b = document.createElement('span'); b.className = 'badge'; b.textContent = 'Best retention';
+      a.appendChild(b);
+    }
+    var b2 = document.createElement('td'); b2.className = 'num'; b2.textContent = x.v;
+    var c = document.createElement('td'); c.className = 'num'; c.textContent = fmtDur(x.d);
+    tr.appendChild(a); tr.appendChild(b2); tr.appendChild(c);
+    tb.appendChild(tr);
+  });
+
+  /* Traffic sources */
+  var src = [
+    ['YouTube Search',34],['Shorts feed',3],['Hashtags',2],['Subscriber feed',2],
+    ['Channel page',1],['Related video',1],['External link',1]
+  ];
+  var tr = document.getElementById('traffic');
+  src.forEach(function(s){
+    var row = document.createElement('div'); row.className = 'bar-row';
+    var top = document.createElement('div'); top.className = 'row';
+    var n = document.createElement('span'); n.textContent = s[0];
+    var v = document.createElement('span'); v.textContent = s[1] + ' views';
+    top.appendChild(n); top.appendChild(v);
+    var track = document.createElement('div'); track.className = 'track';
+    var fill = document.createElement('div'); fill.className = 'fill';
+    fill.style.width = (s[1]/34*100).toFixed(1) + '%';
+    track.appendChild(fill);
+    row.appendChild(top); row.appendChild(track);
+    tr.appendChild(row);
+  });
+
+  /* Two small bar charts */
+  function bars(id, data, max, unit){
+    var s = document.getElementById(id);
+    var base = 150, top = 24, bw = 70;
+    var xs = [60, 170];
+    data.forEach(function(d,i){
+      var h = (d[1]/max)*(base-top);
+      el('rect',{x:xs[i],y:base-h,width:bw,height:h,rx:4,fill: i===0 ? css('--accent') : css('--muted')}, s);
+      txt(s, xs[i]+bw/2, base-h-6, d[1] + unit, 'middle');
+      txt(s, xs[i]+bw/2, base+18, d[0], 'middle');
+    });
+    el('line',{x1:20,x2:280,y1:base,y2:base,stroke:css('--line'),'stroke-width':1}, s);
+  }
+  bars('viewsChart', [['Long-form',30],['Shorts',14]], 30, '');
+  bars('durChart', [['Long-form',114],['Shorts',14]], 114, 's');
+})();
+</script>
+</body>
+</html>
